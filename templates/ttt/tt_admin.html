@@ -1,0 +1,439 @@
+<!--<html>
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/static/css/bootstrap-theme.min.css" rel="stylesheet">
+	<style id="holderjs-style" type="text/css"></style>	
+	<script type="text/javascript">
+
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['Work',     11],
+          ['Eat',      2],
+          ['Commute',  2],
+          ['Watch TV', 2],
+          ['Sleep',    7]
+        ]);
+
+        var options = {
+          title: 'My Daily Activities'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('chart'));
+        chart.draw(data, options);		
+	
+      }
+      
+      chdata=new Array([]);
+	  count=0;
+	  types=["add_to_cart","place_order"];
+	
+	
+	function ajax_get_json(){
+    
+    var hr = new XMLHttpRequest();
+    var return_data;
+    
+    var url = "http://api.in10do.com/data/"+types[count]+"/delta/?access_key=3a18328b8ec84020b62f9b5070fde522";
+    
+    hr.open("GET", url, false);
+    // Set content type header information for sending url encoded variables in the request
+    //hr.setRequestHeader("Content-type", "application/json",true);
+    // Access the onreadystatechange event for the XMLHttpRequest object
+    hr.onreadystatechange = function() {
+	    if(hr.readyState == 4 && hr.status == 200) {
+		    return_data = JSON.parse(hr.responseText);
+			//document.getElementById("status").innerHTML = return_data;
+			console.log(return_data);
+			if(count<2) count++;
+			//console.log(return_data.type);
+			update_chart(return_data);
+			if(count<2) {ajax_get_json();}	    
+		}
+    }
+}
+    </script>
+  </head>
+  <body style data-twttr-rendered="true">
+    <script src="/static/js/bootstrap.min.js"></script>
+	<!--<div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Charts <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href=../linechart/>Line Chart</a></li>
+			<li class="divider"></li>t
+                  <li><a href=../piechart/>Pie Chart</a></li>
+                 
+                                  </ul>
+              </li>
+            </ul>
+          </div>
+	<header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner">
+  <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="../" class="navbar-brand" style="margin-right:10%"><img style="height:5%;width:43.5%"src="/static/img/logo.png" alt="Unix Logo" ></a>
+    </div>
+    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+      <ul class="nav navbar-nav">
+        <li>
+          <a href="#" style="margin-top:15%;margin-left:-150%;color:#FFFFFF">Site</a>
+        </li>
+        
+        <li>
+          <a href="../consumer/" style="margin-top:8%;margin-left:-90%">Consumer</a>
+        </li>
+        
+        <li>
+          <a href="../product/" style="margin-top:10%;margin-left:-120%">Product</a>
+        </li>
+	<!--<li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Charts <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href=../linechart/>Line Chart</a></li>
+			<li class="divider"></li>
+                  <li><a href=../piechart/>Pie Chart</a></li>
+                 
+                                  </ul>
+              </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+      	<li>
+          <a href="../about" style="margin-top:8%">Settings</a>
+        </li>
+        <li>
+          <a href="../about" style="margin-top:8%">Sign In</a>
+        </li>
+        
+	
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+<!--<div class="jumbotron" style="height:200px;width:400px;float:left;">
+<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation" style="width:20%; ">
+          <div class="list-group">
+            <a  class="list-group-item active" style="text-align:center">DASHBOARD</a>
+            <a class="list-group-item">Line Chart</a>
+            <a class="list-group-item">Pie Chart</a>
+            <a class="list-group-item">Histogram</a>
+            <a class="list-group-item">Line Chart</a>
+            <a class="list-group-item">Pie Chart</a>
+            <a class="list-group-item">Histogram</a>
+            <a class="list-group-item">Line Chart</a>
+            <a class="list-group-item">Pie Chart</a>
+            <a class="list-group-item">Histogram</a>
+           <!-- <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+          </div>
+        </div>
+      <div style="margin-left:19.75%;margin-right:0.8%;margin-top:5.77%">  
+        <ol class="breadcrumb">
+  <li><a href="#">Home</a></li>
+  <li><a href="#">Library</a></li>
+  <li class="active">Data</li>
+</ol>
+ </div>
+<!--<div class="jumbotron" style="margin-left:19.75%;margin-right:0.8%;margin-top:5.77%;height:30%">
+	
+        <h1 style="font-size:150%" >Dashboard</h1>
+        <p style="font-size:15px">This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+        <p><a href="#" class="btn btn-primary " role="button" style="">Learn more »</a></p>
+      </div>
+      
+      
+    <div id="chart" style="width: 800px; height: 400px;margin-left: 30%"></div>
+    <!--<button type="button" class="btn btn-warning" >Warning </button>
+  </body>
+</html>-->
+
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/static/css/bootstrap-theme.min.css" rel="stylesheet">
+	<style id="holderjs-style" type="text/css"></style>	
+	<script type="text/javascript">
+
+	//Global variables
+	
+	google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+
+	chdata=new Array([]);
+	count=0;
+	types=["add_to_cart","place_order"];
+	
+	//JSON Function
+	
+    function ajax_get_json(){
+    
+		var hr = new XMLHttpRequest();
+		var return_data;
+		var url = "http://api.in10do.com/data/"+types[count]+"/delta/?access_key=3a18328b8ec84020b62f9b5070fde522";	
+		hr.open("GET", url, false);
+		hr.onreadystatechange = function() {
+			if(hr.readyState == 4 && hr.status == 200) {
+				return_data = JSON.parse(hr.responseText);
+				//document.getElementById("status").innerHTML = return_data;
+				console.log(return_data);
+				if(count<2) count++;
+				//console.log(return_data.type);
+				update_chart(return_data);
+				if(count<2) {ajax_get_json();}	    
+			}
+    	}
+    hr.send(null); // Actually execute the request
+    }
+	
+   
+    function drawChart() {
+		var data = google.visualization.arrayToDataTable([
+          ['Year', 'Sales', 'Expenses'],
+          ['2004',  1000,      400],
+          ['2005',  1170,      460],
+          ['2006',  660,       1120],
+          ['2007',  1030,      540]
+        ]);
+
+        var options = {
+          title: 'Company Performance'
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        //chart.draw(data, options);
+     }
+
+	function update_chart(rt)
+	{
+	
+		var datainfo;
+		var i;
+		var x;
+		console.log(rt.data.length);
+		for(i=0;i<rt.data.length;i++){
+			console.log(rt.data[i]);
+		}
+		chdata[0][0]="Day";
+		chdata[0][1]="Add To Cart";
+		chdata[0][2]="Bought";
+		//chdata[0][3]="Bought";
+		for (i = 1; i < rt.data.length+1 ; i++){
+			var date;
+			var day,month;
+			day=new Date(parseInt(rt.when[rt.when.length-i])).getUTCDate().toString();
+			month=new Date(parseInt(rt.when[rt.when.length-i])).getUTCMonth().toString();
+			date=day+"/"+month;
+			chdata.push([]);
+			chdata[i][0]=date;
+			//chdata[i][0]=new Date(parseInt(rt.when[rt.when.length-i])).toString();
+			chdata[i][count]=parseInt(rt.data[rt.when.length-i]);
+		}
+	console.log(chdata);
+	console.log("Number of elements");
+	console.log(rt.when.length);
+
+	chdata.splice(rt.when.length+1,rt.when.length+1);
+	
+	if(count==2){
+		var data = google.visualization.arrayToDataTable(chdata);
+
+        var options = {
+          //title: 'Company Performance',
+          vAxis: {title: "Units"},
+      	  hAxis: {title: "Date"},
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+	}
+	
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+   // your code here
+   ajax_get_json();	
+	
+}, false);
+
+	//window.onload=ajax_get_json();	
+	
+    </script>
+  </head>
+  <body style data-twttr-rendered="true" >
+    <script src="/static/js/bootstrap.min.js"></script>
+    <link href="http://getbootstrap.com/examples/justified-nav/justified-nav.css" rel="stylesheet">
+	<!--<div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Charts <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href=../linechart/>Line Chart</a></li>
+			<li class="divider"></li>t
+                  <li><a href=../piechart/>Pie Chart</a></li>
+                 
+                                  </ul>
+              </li>
+            </ul>
+          </div>-->
+	<header class="navbar navbar-inverse  bs-docs-nav" role="banner" style="background:#feb41c;border:#feb41c">
+  <div class="container" >
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="#" class="navbar-brand" style="margin-right:10%;margin-left:-10%"><img style="height:5%;width:50%"src="/static/img/logo.png" alt="Unix Logo" ></a>
+    </div>
+    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+      <ul class="nav navbar-nav">
+        <li>
+          <a href="#" style="margin-top:10%;margin-left:-130%;color:#FFFFFF">Dashboard</a>
+        </li>
+        
+        <li>
+          <a style="margin-top:8%;margin-left:-120%;color:#464c5b">Configuration</a>
+        </li>
+        
+        <!--<li>
+          <a href="../consumer/" style="margin-top:8%;margin-left:-125%;color:#464c5b">Consumer</a>
+        </li>
+        
+        <li>
+          <a href="../product/" style="margin-top:10%;margin-left:-171%;color:#464c5b">Product</a>
+        </li> -->
+	<!--<li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Charts <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href=../linechart/>Line Chart</a></li>
+			<li class="divider"></li>
+                  <li><a href=../piechart/>Pie Chart</a></li>
+                 
+                                  </ul>
+              </li>-->
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+      	<li>
+          <a style="margin-top:10%;color:#464c5b">Settings</a>
+        </li>
+        <li>
+          <a style="margin-top:10%;color:#464c5b">Sign In</a>
+        </li>
+        
+	
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+<!--<div class="jumbotron" style="height:200px;width:400px;float:left;">-->
+<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation" style="width:20% ">
+          <div class="list-group">
+            <a class="list-group-item active" style="text-align:center;background:#464c5b;border:#464c5b">DASHBOARD</a>
+            <a class="list-group-item" href="#">All Actions</a>
+            <a class="list-group-item" href="../view/">Views</a>
+            <a class="list-group-item" href="../add_to_cart">Add To Cart</a>
+            <a class="list-group-item" href="../buy/">Buy</a>
+            <!--<a class="list-group-item">Pie Chart</a>
+            <a class="list-group-item">Histogram</a>
+            <a class="list-group-item">Line Chart</a>
+            <a class="list-group-item">Pie Chart</a>
+            <a class="list-group-item">Histogram</a>
+            <a class="list-group-item">Line Chart</a>
+            <a class="list-group-item">Pie Chart</a>
+            <a class="list-group-item">Histogram</a>
+            <a class="list-group-item">Line Chart</a>-->
+           
+           <!-- <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>-->
+          </div>
+        </div>
+      <!--<div style="margin-left:19.75%;margin-right:0.8%;margin-top:6%">  
+        <ol class="breadcrumb">
+  <li><a href="#">Home</a></li>
+  <li><a href="#">Dashboard</a></li>
+  <li class="active">Site</li>
+</ol>
+ </div>-->
+ 
+ 
+
+
+      <div class="masthead" style="height:5.9%;margin-left:19.75%;margin-right:0.8%;margin-top:0%;border:#464c5b">
+        <!--<h3 class="text-muted">Project name</h3>-->
+        <ul class="nav nav-justified">
+          <li class="active"><a href="#" >Site</a></li>
+          <li><a href="../performance/">Performance</a></li>
+          <!--<li><a href="#">Consumer</a></li>
+          <li><a href="#" >Product</a></li>-->
+          <!--<li><a href="#" style="color:#FFFFFF">Downloads</a></li>
+          <li><a href="#" style="color:#FFFFFF">About</a></li>
+          <li><a href="#" style="color:#FFFFFF">Contact</a></li>-->
+        </ul>
+      </div>
+
+
+<!--<div class="masthead">
+        <h3 class="text-muted">Project name</h3>
+        <ul class="nav nav-justified">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Downloads</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div> -->
+     
+      
+ 
+ 
+ <!--<div class="well" style="margin-left:19.75%;margin-right:0.8%;margin-top:2%">
+ 	<p style="font-size:150%">HEADING</p>
+        <p>Place holder for heading and appropriate content ... Place holder for heading and appropriate content ... Place holder for heading and appropriate content ... Place holder for heading and appropriate content ... Place holder for heading and appropriate content ...</p>
+      </div>
+<!--<div class="jumbotron" style="margin-left:19.75%;margin-right:0.8%;margin-top:5.77%;height:30%">
+	
+        <h1 style="font-size:150%" >Dashboard</h1>
+        <p style="font-size:15px">This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+        <p><a href="#" class="btn btn-primary " role="button" style="">Learn more »</a></p>
+      </div>-->
+      
+    <h1 style="font-size:150%;text-align:center;margin-top:5%;margin-left:16.75%;margin-right:4%" >ALL ACTIONS</h1>
+    <div id="chart_div" style="width:75%; height:54%;margin-left: 20%;margin-top:5%"></div>
+    <!--<button type="button" class="btn btn-warning" onclick=ajax_get_json()>Warning </button>-->
+    
+  </body>
+</html>

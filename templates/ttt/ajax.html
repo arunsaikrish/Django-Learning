@@ -1,0 +1,39 @@
+<html>
+<head>
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script type="application/javascript">
+function loadJSON()
+{
+  var jsonresp="";
+  $(document).ready(function(){
+  
+    $.getJSON("http://headers.jsontest.com/",function(result){
+	  //jsonresp=JSON.stringify(result);
+	  jsonresp=result;
+	  console.log(jsonresp);
+      $.each(result, function(i, field){
+        //jsonresp.concat(field + " ");
+	    console.log(jsonresp);
+      });
+    });
+  
+});
+}
+
+</script>
+<title>tutorialspoint.com JSON</title>
+</head>
+<body>
+<div id="images"></div>
+<h1>Cricketer Details</h1>
+<table class="src">
+<tr><th>Name</th><th>Country</th></tr>
+<tr><td><div id="Name">Sachin</div></td>
+<td><div id="Country">India</div></td></tr>
+</table>
+
+<div class="central">
+<button type="button" onclick="loadJSON()">Update Details </button>
+</body>
+</html>
